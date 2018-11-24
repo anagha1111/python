@@ -1,0 +1,152 @@
+import pickle
+import time
+import os
+print "* W E L C O M E   TO  R A J A G I R I  H O S P I T A L  M A N A G E M E N T * "
+print"*****************************************************************************"
+def add_patients():
+       print "PATIENT DETAILS"
+       pat={"pat_num":{},"name":{},"gender":{},"age":{},"blood":{},"contact":{},"date":{},"roomno":{},"prescribeddoc":{},"case":{}}
+       pat_num=input("ENTER THE UNIQUE PATIENT NUMBER")
+       pat_name=raw_input("ENTER NAME OF THE PATIENT")
+       pat_gender=raw_input("ENTER THE GENDER OF PATIENT")
+       pat_age=input("ENTER THE AGE OF PATIENT")
+       pat_blood=raw_input("ENTER THE BLOOD GROUP OF PATIENT")
+       pat_contact=input("ENTER THE CONTACT NUMBER OF PATIENT")
+       pat_date=raw_input("ENTER THE ADMITTED DATE")
+       pat_roomnum=input("ENTER THE ROOM  NUMBER")
+       pat_prescribeddoc=raw_input("ENTER THE NAME OF PRESCRIBED DOCTOR")
+       pat_case=raw_input("ENTER THE CASE OF PATIENT")
+       pati=""
+       pat["name"][pat_num]=pat_name
+       pat["gender"][pat_num]=pat_gender
+       pat["age"][pat_num]=pat_age
+       pat["blood"][pat_num]=pat_blood
+       pat["contact"][pat_num]=pat_contact
+       pat["date"][pat_num]=pat_date
+       pat["roomno"][pat_num]=pat_roomnum
+       pat["prescribeddoc"][pat_num]=pat_prescribeddoc
+       pat["case"][pat_num]=pat_case
+       f=open("patient.txt","w")
+       pickle.dump(pat,f)
+       os.system('clear')
+       print "Record created "
+       
+       f.close()
+
+def discharge():
+     print"DISCHARGE PATIENTS"
+     f=open("patient.txt","r")
+     pat={}
+     t=1
+     pat_num=input("ENTER THE UNIQUE ID OF PATIENT WHO IS TO BE DISCHARGED")
+     for i,s in pat["name"].items():
+        if i==pat_num:
+             del pat["name"][pat_num]
+             del pat["gender"][pat_num]
+             del pat["age"][pat_num]
+             del pat["blood"][pat_num]
+             del pat["contact"][pat_num]
+             del pat["date"][pat_num]
+             del pat["roomno"][pat_num]
+             del pat["prescribeddoc"][pat_num]
+             del pat["case"][pat_num]
+             f=open("patient.txt","w")
+             pickle.dump(pat,f)
+             f.close()
+             os.system('clear')
+             print "PATIENT HAS BEEN DISCHARGED!!" 
+             break
+        else:
+            print"Patient id is invalid"
+            f=open("patient.txt","w")
+            pickle.dump(pat,f)
+            f.close()
+         
+while(1):
+    print" KEY FEAUTURES"
+    print "\n1.DOCTOR\n2. PATIENT INFORMATIONn \n3. STAFF\n4. SUPPLIES CONTROL AND BILLING \n5.EXIT\n "
+    ch=input(" **ENTER YOUR CHOICE OF FEATURE**")
+    if ch==1:
+        print"* D O C T O R S   A V A I L A B L E *"
+            n=input("1.VIEW DOCTORS AVAIABLE\n2.SEARCH FOR DOCTOR BY DEPARTMENT\nEnter choice:")
+            if n==1:
+                doctors=dict({'PEADIATRICIAN':'ARUN KUMAR','ORTHOPAEDICS':'SUNIL KRISHNA','NEUROSURGEON':'KISHORE KRISHNA','GYNAECOLOGY':'SUNITHA MENON','ENT':'SUNIMOL ZACHARIAH','RADIOLOGY':'NITHYA MENON'})
+                print "DOCTOR NAME","::DEPARTMENT",    
+                for k,v in doctors.items():
+                        print '\n',k,":",v
+
+        elif n==2:
+                doctors=dict({'PEADIATRICIAN':'ARUN KUMAR','ORTHOPAEDICS':'SUNIL KRISHNA','NEUROSURGEON':'KISHORE KRISHNA','GYNAECOLOGY':'SUNITHA MENON','ENT':'SUNIMOL ZACHARIAH','RADIOLOGY':'NITHYA MENON'})
+                print "DEPARTMENTS\n1.ENT\n2.PAEDIATRICIAN\n3.ORTHOPAEDICS\n4.NEUROSURGEON\n5.GYNAECOLOGY\n6.RADIOLOGY\n"
+                department=raw_input("enter the department to be seached")
+                   print doctors[department]
+    elif ch==2:
+            print "* P A T I E N T  I N F O R M A T I O N *"
+            print "1.ADMIT PATIENT \n2.DISCHARGE  PATIENT"
+            q=input("enter choice:")
+            if q==1:
+                   add_patients()
+
+            elif q==2:
+                discharge()
+    elif ch==3:
+            print"* S T A F F' S   A V A I L A B L E*"
+            staff=dict({'SHRUTHY':'PAEDIATRICION','MENON':'ORTHOPAEDICS','LILLY':'NEUROSURGEON','THOMAS':'GYNAECOLOGY','KURIAN':'ENT','JACOB':'RADIOLOGY'})
+            print "\n"
+            print "STAFF NAME| DEPARTMENT\n**********************",
+            for k,v in staff.items():
+                print'\n',k,"|",v
+        
+    elif ch==4:
+            print"* M E D I C I N E   S U P P L Y*"
+            print " CHOOSE THE TYPE OF DRUG"
+            print" \n 1. ANTI INFECTIVE \n 2. CARDIOVASCULAR \n 3.RESPIRATORY \n 4. PSYCHIATRY \n 5.ANALGESICS \n "
+            c=input("ENTER YOUR CHOICE OF DRUGSS")
+            if c==1:
+                print"1.Amoxycillin capsules \n 2.Cefaclor \n 3.Cefaclor suspension \n 4.Cephalexin \n 5.Flucloxacillin \n 6.    Metronidazole \n 7.Phenoxymethylpenicillin \n"
+      
+
+            elif c==2:
+                 print"\n 1.Captopril tablets \n 2.Enalapril \n 3.Enalapril \n 4.Nifedipine \n 5.Frusemide \n 6.Prazosin \n"
+
+            elif c==3:
+                 print"\n 1.Antihistamines \n 2.Ipratropium \n 3.Salbutamol (inhaled)"
+            elif c==4:
+                print" \n 1.Benzodiazepines \n 2.Chlorpromazine \n 3.amitriptyline \n 4.dothiepin \n"
+            elif c==5:
+                print"\n 1.Aspirin \n 2.diclofenac \n 3.ketoprofen, \n 4.naproxen \n 5.piroxicam"
+            else:
+                print"INVALID OPTION"
+
+        class bill:
+                     def det(self,name,medicine,qty,price):
+                         self.name=name
+                         self.medicine=medicine
+                         self.qty=qty
+                         self.price=price
+                     def cost(self):
+
+                               Price = self.qty*self.price
+                               print "total price=",Price
+
+         na=raw_input("Enter name of patient")
+            m=raw_input("Enter name of medicine:")
+            r=input("Enter quantity")
+            p=input("Enter price:")
+            p1=bill()
+            p1.det(na,m,r,p)
+            p1.cost()
+
+
+
+    elif ch==5:
+        break
+    else:
+        print "INVALID OPTION"
+
+
+    
+                       
+                   
+                 
+   
